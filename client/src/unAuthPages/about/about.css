@@ -1,0 +1,16 @@
+.about{
+    text-align: center;
+    margin: 70px 0px 20px 0px;
+}
+.aboutCon{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.aboutPara{
+    margin: 5px 30px 5px 30px;
+    padding: 35px;
+}
+.aboutIcon a{
+    margin: 5px 20px 5px 20px;
+}

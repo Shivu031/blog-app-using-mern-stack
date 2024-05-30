@@ -1,0 +1,15 @@
+.footCon{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: rgb(242, 241, 241);
+    padding-top: 10px;
+    bottom: 0;
+}
+.footLi{
+    list-style: none;
+    display: flex;
+}
+.footLiItem{
+    margin: 5px;
+}

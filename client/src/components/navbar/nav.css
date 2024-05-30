@@ -1,0 +1,28 @@
+.navbar{
+    top: 0;
+    width: 100%;
+    position: fixed;
+    cursor: pointer;
+}
+.navbar-brand{
+    font-style: italic;
+    font-weight: bold;
+}
+.navbar-nav{
+    margin-left: auto;
+}
+.navbar a{
+    font-size: 20px;
+    margin-left: 40px;
+}
+.navbar a:hover{
+    color: gray;
+}
+
+
+.userProfile{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
