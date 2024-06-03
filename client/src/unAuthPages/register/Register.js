@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import "./register.css";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../store/auth';
 
 const Register = () => {
   const [userData, setUserData] = useState({
@@ -8,6 +11,10 @@ const Register = () => {
     phone: "",
     password: "",
   });
+
+  const {storeTokenInLS} = useAuth();
+  const navigate = useNavigate();
+
   const handleInput = (e)=>{
     const {name, value} = e.target;
 
@@ -16,9 +23,23 @@ const Register = () => {
         [name] : value,
     })
   }
-  const handleSubmit = (e)=>{
+  const handleSubmit = async(e)=>{
     e.preventDefault();
     console.log(userData);
+    try{
+      const res = await axios.post("http://127.0.0.1:5000/api/auth/register", userData);
+      // console.log(res);
+      console.log(res.data);
+      if (res) {
+        alert("registration successful");
+        storeTokenInLS(res.data.token);
+        navigate("/login");
+      } else {
+        console.log("error inside response ", "error");
+      }
+    }catch(err){
+      console.log(err);
+    }
   }
 
   return (
@@ -42,7 +63,6 @@ const Register = () => {
                 <label htmlFor="exampleFormControlInput1" className="form-label">Password:</label>
                 <input type="password" className="form-control" id="exampleFormControlInput1" placeholder="password" name='password' value={userData.password} onChange={handleInput} required/>
             </div>
-            {/* <button type="button" className="btn btn-secondary">Register Now!</button> */}
             <div className="d-grid gap-2 col-6 mx-auto">
               <button className="btn btn-secondary" type="submit">Register Now!</button>
             </div>

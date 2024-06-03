@@ -1,0 +1,39 @@
+.post{
+    margin: 80px 0px 20px 0px;
+}
+.postNav{
+    display: flex;
+    align-items: center;
+}
+.postNavImg{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0px 6px;
+}
+.postDate{
+    margin-left: 20px;
+}
+.postTitle{
+    display: flex;
+    cursor: pointer;
+}
+.postDescription{
+    display: flex;
+    align-items: center;
+}
+.postDescPara{
+    font-size: 16px;
+    line-height: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    padding-right: 15px;
+}
+.postDescImg{
+    width: 300px;
+    height: 150px;
+}
