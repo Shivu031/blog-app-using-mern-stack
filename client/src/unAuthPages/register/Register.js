@@ -2,17 +2,15 @@ import React, { useState } from 'react';
 import "./register.css";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../store/auth';
+
 
 const Register = () => {
   const [userData, setUserData] = useState({
     username: "",
     email: "",
-    phone: "",
     password: "",
   });
 
-  const {storeTokenInLS} = useAuth();
   const navigate = useNavigate();
 
   const handleInput = (e)=>{
@@ -32,7 +30,6 @@ const Register = () => {
       console.log(res.data);
       if (res) {
         alert("registration successful");
-        storeTokenInLS(res.data.token);
         navigate("/login");
       } else {
         console.log("error inside response ", "error");
@@ -54,10 +51,6 @@ const Register = () => {
             <div className="mb-3">
                 <label htmlFor="exampleFormControlInput1" className="form-label">Email address:</label>
                 <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com" name='email' value={userData.email} onChange={handleInput} required/>
-            </div>
-            <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Phone Number:</label>
-                <input type="number" className="form-control" id="exampleFormControlInput1" placeholder="phone number" name='phone' value={userData.phone} onChange={handleInput} required/>
             </div>
             <div className="mb-3">
                 <label htmlFor="exampleFormControlInput1" className="form-label">Password:</label>

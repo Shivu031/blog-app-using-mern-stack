@@ -6,6 +6,8 @@ const authRoute = require("./routes/auth-route");
 const userRoute = require("./routes/user-route");
 const postRoute = require("./routes/post-route");
 const cors = require("cors");
+const multer = require('multer');
+const path = require('path');
 
 const app = express();
 
@@ -18,8 +20,27 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
+app.use("/images",express.static(path.join(__dirname,'/images')));
 
-app.use(express.json());
+const storage = multer.diskStorage({
+    destination:(req,file,cb)=>{
+        cb(null,"images");
+    },filename:(req,file,cb)=>{
+        cb(null,req.body.name);
+    }
+});
+
+const upload = multer({storage:storage});
+
+app.post("/api/upload",upload.single("file"),(req,res)=>{
+    res.status(200).json("File has been uploaded");
+})
+
+// app.post("/api/uploads",upload.array("file",12),(req,res)=>{
+//     res.status(200).json("File has been uploaded");
+// })
+
+
 
 // app.get("/", (req,res)=>{
 //     return res.status(200).send("Welcome to my blog application (Mern Stack)");

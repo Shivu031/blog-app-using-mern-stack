@@ -16,7 +16,7 @@ const Write = () => {
             <input type="file" style={{display:'none'}} id="fileInput"/>
             <textarea placeholder='Tell your story...' type='text' className='writeInput writeText'></textarea>
           </div>
-          <button type="button" class="writeSubmit btn btn-success btn-lg">Publish</button>
+          <button type="button" className="writeSubmit btn btn-success btn-lg">Publish</button>
         </form>
       </div>
     </>

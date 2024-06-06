@@ -1,7 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { useAuth } from '../../store/auth';
 
 const UserNav = () => {
+    const {user} = useAuth();
   return (
     <>
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -21,11 +23,11 @@ const UserNav = () => {
                 </li>
                 <li className="nav-item">
                 <NavLink className="nav-link" to="/user/setting">
-                    <img src="" alt="" className='userProfile'/>
+                    <img src={"http://127.0.0.1:5000/images/"+ user.userProfile} alt="" className='userProfile'/>
                 </NavLink>
                 </li>
                 <li className="nav-item">
-                <NavLink className="nav-link" to="/user/logout">LogOut</NavLink>
+                <NavLink className="nav-link" to="/login">LogOut</NavLink>
                 </li>
             </ul>
             </div>

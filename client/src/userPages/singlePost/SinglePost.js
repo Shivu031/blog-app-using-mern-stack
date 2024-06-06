@@ -1,15 +1,41 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./singlePost.css";
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const SinglePost = () => {
+  
+  const {postId} = useParams();
+  const [post, setPost] = useState(null);
+  console.log(useParams())
+
+  useEffect(() => {
+    const getPost = async () => {
+        try {
+            const res = await axios.get(`http://127.0.0.1:5000/api/posts/${postId}`);
+            setPost(res.data);
+            console.log(res.data);
+        } catch (err) {
+            console.log(err.message);
+        }
+    };
+
+    getPost();
+  }, [postId]);
+
+  if (!post) {
+      return <div>Loading...</div>;
+  }
+
+
   return (
     <>
       <div className="singlePost">
-        <h2>Titleeeeeeeeee</h2>
+        <h2>{post.title}</h2>
         <div className="singleProfileCon">
            <img src="" alt="" className='singleProfilePic'/> 
-           <span className='singleUsername'>Username</span>
-           <span className='singleDate'>~  10 sep, 2024</span>
+           <span className='singleUsername'>{post.username}</span>
+           <span className='singleDate'>~ {new Date(post.createdAt).toDateString()}</span>
         </div>
         <hr />
         <div className="singleLikeCon">
@@ -27,13 +53,15 @@ const SinglePost = () => {
         <i className="singleIcon fa-solid fa-trash-can fa-xl"></i>
         </div>
         <div className="singleDesc">
-            <p className="singlePara">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Maiores officia voluptas harum necessitatibus, quidem pariatur quas reprehenderit aperiam impedit dignissimos provident autem eligendi magnam laborum sequi quis voluptate illo quibusdam.
-            </p>
-            <img src="" alt="" className="singleImg" />
-            <p className="singlePara">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis cumque consequatur illum facilis fuga, fugiat et dolorem tenetur beatae eum. Ipsum, enim omnis! Vero tenetur, quae molestias placeat dolor veritatis?
-            </p>
+          {post.description.map((desc, index) => {
+              if (desc.type === 'image') {
+                  return <img key={index} src={desc.data} alt="" className="singleImage" />;
+              }
+              if (desc.type === 'text') {
+                  return <p key={index} className='singlePara'>{desc.data}</p>;
+              }
+              return null;
+          })}
         </div>
       </div>
     </>

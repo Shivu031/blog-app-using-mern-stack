@@ -1,20 +1,14 @@
 import React from 'react';
 import "./posts.css";
-import Data from '../../Data';
 import Post from '../post/Post';
 
-const Posts = () => {
+const Posts = ({posts}) => {
   return (
     <>
       <div className="posts">
-        {
-            Data.map((val, ind)=>{
-                return <Post key={ind} title = {val.title}
-                description={val.description}
-                  username={val.username}                 
-                />
-            })
-        }
+        {posts.map((p)=>(
+          <Post key={p._id} post={p}/>
+        ))}
       </div>
     </>
   )

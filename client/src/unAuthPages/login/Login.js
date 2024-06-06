@@ -28,9 +28,9 @@ const Login = () => {
       const res = await axios.post("http://127.0.0.1:5000/api/auth/login", userData);
       // console.log(res);
       console.log(res.data);
+      storeTokenInLS(res.data.token, res.data.user);
       if (res) {
         alert("Login successful");
-        storeTokenInLS(res.data.token);
         navigate("/user");
       } else {
         console.log("Invalid Credentials");

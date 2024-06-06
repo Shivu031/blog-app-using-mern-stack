@@ -2,7 +2,6 @@ import {BrowserRouter as Router, Routes, Route, Navigate } from "react-router-do
 import UnAuth from "./pages/UnAuth";
 import User from "./pages/User";
 import { useAuth } from "./store/auth";
-import Login from "./unAuthPages/login/Login";
 
 function App() {
   const { isLoggedIn } = useAuth();
