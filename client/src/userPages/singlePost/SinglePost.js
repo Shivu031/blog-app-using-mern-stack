@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import "./singlePost.css";
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useAuth } from '../../store/auth';
 
 const SinglePost = () => {
   
   const {postId} = useParams();
   const [post, setPost] = useState(null);
-  console.log(useParams())
+  // console.log(useParams())
+  const {user} = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getPost = async () => {
@@ -27,6 +30,25 @@ const SinglePost = () => {
       return <div>Loading...</div>;
   }
 
+  const handleUpdate = async()=>{
+    try{
+      // const res = await axios.put(`http://127.0.0.1:5000/api/posts/${postId}`,{
+        
+      // })
+    }catch(err){
+      console.log("updating error",err);
+    }
+  }
+
+  const handleDelete =async()=>{
+    try{
+      await axios.delete(`http://127.0.0.1:5000/api/posts/${postId}`);
+      alert("post deleted successfully");
+      navigate("/user");
+    }catch(err){
+      console.log("deleting error",err);
+    }
+  }
 
   return (
     <>
@@ -48,10 +70,15 @@ const SinglePost = () => {
             
         </div>
         <hr />
-        <div className="singleIconCon">
-        <i className="singleIcon fa-regular fa-pen-to-square fa-xl"></i>
-        <i className="singleIcon fa-solid fa-trash-can fa-xl"></i>
-        </div>
+        {
+          post.author === user.userId ? (
+            <div className="singleIconCon">
+            <i className="singleIcon fa-regular fa-pen-to-square fa-xl" onClick={handleUpdate}></i>
+            <i className="singleIcon fa-solid fa-trash-can fa-xl" onClick={handleDelete}></i>
+            </div>
+          ) : null
+        }
+        
         <div className="singleDesc">
           {post.description.map((desc, index) => {
               if (desc.type === 'image') {

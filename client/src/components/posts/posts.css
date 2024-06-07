@@ -1,5 +1,6 @@
 .posts{
-    /* text-align: center;
-    margin: 80px 0px 20px 0px; */
-    padding: 20px 80px;
+    flex: 8;
+    /* text-align: center; */
+    margin: 70px 0px 20px 0px;
+    padding: 0px 40px;
 }

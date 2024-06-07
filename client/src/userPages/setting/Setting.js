@@ -29,10 +29,10 @@ const Setting = () => {
     };
     if(file){
       const data = new FormData();
-      const filename = Date.now() + file.name;
-      data.append("name",filename);
+      console.log(data)
+      data.append("name",file.name);
       data.append("file",file);
-      updatedUser.userProfile = filename;
+      updatedUser.userProfile = file.name;
       try{
         await axios.post("http://127.0.0.1:5000/api/upload",data, {
           headers: {
@@ -79,7 +79,7 @@ const Setting = () => {
         <form className="settingForm" onSubmit={handleUpdateSubmit}>
           <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">Profile Picture: <br/>
-              <img src={file ? URL.createObjectURL(file) : "http://127.0.0.1:5000/images/" + user.profilePic} alt="" className='settingImg'/>
+              <img src={file ? URL.createObjectURL(file) : "http://127.0.0.1:5000/images/" + user.userProfile} alt="" className='settingImg'/>
               <i className="settingIcon fa-regular fa-circle-user"></i>
             </label>
             <input type="file" style={{display:'none'}} className="form-control" id="exampleFormControlInput1" onChange={(e)=>setFile(e.target.files[0])}/>

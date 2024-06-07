@@ -9,7 +9,7 @@ router.post("/",async(req,res)=>{
 
         const postCreated = await Post.create({ title, description, author });
 
-        res.status(201).json({msg:"Post created successfully"});
+        res.status(201).json(postCreated);
     }catch(err){
         res.status(400).json({message:err.message});
     }   
