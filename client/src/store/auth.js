@@ -6,6 +6,7 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
     const [token, setToken] = useState('');
     const [user, setUser] = useState(null);
+    const [users, setUsers] = useState([]);
 
   //function to stored the token in local storage
   const storeTokenInLS = (serverToken,userData) => {
@@ -44,13 +45,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const getAllUsers = async()=>{
+    try{
+      const res = await axios.get("http://127.0.0.1:5000/api/users");
+      setUsers(res.data);
+      console.log(res.data);
+
+    }catch(error){
+      console.log("failed to fetch users", error);
+    }
+  }
   useEffect(() => {
     getUser();
+    getAllUsers();
   }, []);
 
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, storeTokenInLS, LogoutUser, user }}>
+    <AuthContext.Provider value={{ isLoggedIn, storeTokenInLS, LogoutUser, user, users }}>
       {children}
     </AuthContext.Provider>
   );

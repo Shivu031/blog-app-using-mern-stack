@@ -3,13 +3,15 @@ import "./login.css";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../store/auth';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
-
+  
   const {storeTokenInLS} = useAuth();
   const navigate = useNavigate();
 
@@ -30,13 +32,15 @@ const Login = () => {
       console.log(res.data);
       storeTokenInLS(res.data.token, res.data.user);
       if (res) {
-        alert("Login successful");
-        navigate("/user");
+        toast.success("Login successful");
+        setTimeout(() => {
+          navigate('/user');
+        }, 2000); // Redirect after 2 seconds
       } else {
-        console.log("Invalid Credentials");
+        toast.error('Invalid Credentials');
       }
     }catch(err){
-      console.log(err);
+      toast.error('Invalid Credentials');
     }
   }
 
@@ -55,8 +59,9 @@ const Login = () => {
           </div>
           <div className="d-grid gap-2 col-6 mx-auto">
             <button className="btn btn-secondary" type="submit">Login Now!</button>
-          </div>
+            </div>
         </form>
+        <ToastContainer />
       </div>
     </>
   )

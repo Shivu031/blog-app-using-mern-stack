@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import "./register.css";
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Register = () => {
@@ -10,7 +12,7 @@ const Register = () => {
     email: "",
     password: "",
   });
-
+  
   const navigate = useNavigate();
 
   const handleInput = (e)=>{
@@ -29,13 +31,15 @@ const Register = () => {
       // console.log(res);
       console.log(res.data);
       if (res) {
-        alert("registration successful");
-        navigate("/login");
+        toast.success("Registration successful");
+        setTimeout(() => {
+          navigate('/login');
+        }, 2000); // Redirect after 2 seconds
       } else {
-        console.log("error inside response ", "error");
+        toast.error("Something went wrong...");
       }
     }catch(err){
-      console.log(err);
+      toast.error("Something went wrong...");
     }
   }
 
@@ -60,7 +64,8 @@ const Register = () => {
               <button className="btn btn-secondary" type="submit">Register Now!</button>
             </div>
         </form>
-        <a href="/login">Already have an account</a>
+        <ToastContainer/>
+        <a href="/login">Already have an account</a><br/>
       </div>
     </>
   )

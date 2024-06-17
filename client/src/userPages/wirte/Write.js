@@ -10,23 +10,25 @@ const Write = () => {
   const editorRef = useRef(null);
   const quillRef = useRef(null);
   const [title, setTitle] = useState('');
-  const {user} = useAuth();
-
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!quillRef.current) {
     const quillInstance = new Quill(editorRef.current, {
       theme: 'snow',
       modules: {
         toolbar: [
-          [{ header: [2, 3, false] }],
-          ['bold', 'italic', 'underline'],
-          ['image', 'code-block'],
+          // [{ header: [1, 2, 3, false] }],
+          ['bold', 'italic', 'underline', { 'font': [] }],
+          ['image'],
         ],
       },
     });
     quillRef.current = quillInstance;
 
+
+    // Custom handler for inserting image
     quillInstance.getModule('toolbar').addHandler('image', () => {
       const input = document.createElement('input');
       input.setAttribute('type', 'file');
@@ -49,6 +51,8 @@ const Write = () => {
 
             // Move cursor to the next line after inserting the image
             quillInstance.setSelection(range.index + 1);
+            quillInstance.insertText(range.index + 1, '\n'); // Insert newline after image
+            quillInstance.setSelection(range.index + 2);
           } else {
             console.error('Failed to upload image');
           }
@@ -57,28 +61,45 @@ const Write = () => {
         }
       };
     });
+    
+  }
   }, []);
 
   const handleSubmit = async () => {
     const quill = quillRef.current;
-    if(!quill){
+    if (!quill) {
       console.log("quill is not initialized")
+      return;
     }
     const delta = quill.getContents();
+    console.log(delta)
     const description = delta.ops.map(op => {
+      const attributes = op.attributes || {};
       if (op.insert.image) {
         return { type: 'image', data: op.insert.image };
-      } else if (typeof op.insert === 'string') {
+      }else if (typeof op.insert === 'string') {
+
         // Filter out empty strings and newlines
         const trimmedText = op.insert.trim();
         if (trimmedText) {
-          return { type: 'text', data: trimmedText };
+          if (attributes.font) {
+            return { type: 'font', data: trimmedText, attributes };
+          } else if (attributes.underline) {
+            return { type: 'font', data: trimmedText, attributes };
+          } else if (attributes.bold) {
+            return { type: 'font', data: trimmedText, attributes };
+          } else if (attributes.italic) {
+            return { type: 'font', data: trimmedText, attributes };
+          } else {
+            return { type: 'text', data: trimmedText, attributes };
+          }
         }
       }
       return null;
     }).filter(Boolean);
 
 
+    
     try {
       const res = await axios.post('http://127.0.0.1:5000/api/posts', {
         title,
@@ -99,32 +120,30 @@ const Write = () => {
   };
 
   return (
-    <>
-      <div className="write">
-        <form className="writeForm" onSubmit={(e) => e.preventDefault()}>
-          <div className="writeFormCon">
-            <input
-              type="text"
-              className="writeInput"
-              placeholder="Title"
-              autoFocus={true}
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
-          <div className="writeFormCon2">
-            <div ref={editorRef} className="quill-editor"></div>
-          </div>
-          <button
-            type="button"
-            className="writeSubmit btn btn-success btn-lg"
-            onClick={handleSubmit}
-          >
-            Publish
-          </button>
-        </form>
-      </div>
-    </>
+    <div className="write">
+      <form className="writeForm" onSubmit={(e) => e.preventDefault()}>
+        <div className="writeFormCon">
+          <input
+            type="text"
+            className="writeInput"
+            placeholder="Title"
+            autoFocus={true}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div className="writeFormCon2">
+          <div ref={editorRef} className="quill-editor"></div>
+        </div>
+        <button
+          type="button"
+          className="writeSubmit btn btn-success btn-lg"
+          onClick={handleSubmit}
+        >
+          Publish
+        </button>
+      </form>
+    </div>
   );
 };
 

@@ -1,4 +1,6 @@
+const authMiddleware = require("../middlewares/auth-middleware");
 const Post = require("../models/Post-Model");
+const User = require("../models/User-Model");
 const router = require("express").Router();
 
 // CREATE A NEW POST
@@ -77,6 +79,62 @@ router.get("/",async(req,res)=>{
         res.json(posts);
     }catch(err){
         res.status(400).json({message:err.message});
+    }
+});
+
+// Like a post
+router.post("/:id/like",authMiddleware, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+        if (post.likes.includes(req.user._id)) {
+            return res.status(400).json({ message: "You already liked this post" });
+        }
+        post.likes.push(req.user._id);
+        await post.save();
+        res.status(200).json({ message: "Post liked", likes: post.likes.length });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Unlike a post
+router.post("/:id/unlike",authMiddleware, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+        const index = post.likes.indexOf(req.user._id);
+        if (index === -1) {
+            return res.status(400).json({ message: "You haven't liked this post" });
+        }
+        post.likes.splice(index, 1);
+        await post.save();
+        res.status(200).json({ message: "Post unliked", likes: post.likes.length });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
+// Comment on a post
+router.post("/:id/comments", authMiddleware, async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: "Post not found" });
+        }
+        const comment = {
+            user: req.user._id,
+            text: req.body.text
+        };
+        post.comments.push(comment);
+        await post.save();
+        res.status(201).json({ message: "Comment added", comments: post.comments });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
     }
 });
 
