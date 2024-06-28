@@ -10,7 +10,7 @@ function App() {
     <>
     <Router>
     <Routes>
-      <Route exact path="*" element={<UnAuth/>}/>
+      <Route exact path="*" element={!isLoggedIn ? <UnAuth/> : <Navigate to="/user"/>}/>
       <Route exact path="/user/*" element={isLoggedIn ? <User/> : <Navigate to="/login"/>}/>
     </Routes>
     </Router>

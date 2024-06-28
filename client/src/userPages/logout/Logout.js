@@ -6,7 +6,7 @@ const Logout = () => {
     const { LogoutUser } = useAuth();
 
     useEffect(() => {
-        LogoutUser();
+      LogoutUser();
     }, [LogoutUser]);
 
   return (

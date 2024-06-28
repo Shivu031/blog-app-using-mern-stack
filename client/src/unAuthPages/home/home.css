@@ -7,3 +7,10 @@
 .image{
     margin-left: 50px;
 }
+@media (max-width: 600px){
+    .image{
+        margin-left: 20px;
+        width: 200px;
+        height: 400px;
+    }
+}

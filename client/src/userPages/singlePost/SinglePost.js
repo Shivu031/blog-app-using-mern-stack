@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './singlePost.css';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -14,9 +14,12 @@ const SinglePost = () => {
   const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
-  const [imageFile, setImageFile] = useState(null);
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState('');
+  const [showComments, setShowComments] = useState(false);
 
   const token = localStorage.getItem("token");
+  console.log(useAuth().user)
 
   useEffect(() => {
     const getPost = async () => {
@@ -27,6 +30,7 @@ const SinglePost = () => {
         setDescription(res.data.description || []);
         setIsLiked(res.data.likes.includes(user.userId));
         setLikesCount(res.data.likes.length);
+        setComments(res.data.comments || []);
       } catch (err) {
         console.log(err.message);
       }
@@ -100,14 +104,10 @@ const SinglePost = () => {
     setDescription(updatedDescription);
   };
 
-  const handleImageChange = (e, index) => {
-    const file = e.target.files[0];
-    setImageFile(file);
-    const newDescription = [...description];
-    newDescription[index] = { ...newDescription[index], data: URL.createObjectURL(file) };
-    setDescription(newDescription);
+  const handleImageChange = async (e, index) => {
+    
   };
-
+  
   const renderText = (desc, index) => {
     let classNames = '';
     if (desc.attributes) {
@@ -127,13 +127,44 @@ const SinglePost = () => {
     );
   };
 
+  const handleToggleComments = () => {
+    setShowComments(prevState => !prevState);
+  };
+
+  const handleAddComment = async () => {
+    try {
+      if (!user || !user.userId) {
+        console.error('User information not available.');
+        return;
+      }
+  
+      const commentData = { 
+        text: newComment, 
+        author: user.userId 
+      };
+      const res = await axios.post(`http://127.0.0.1:5000/api/posts/${postId}/comments`,
+        commentData,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log("AA")
+      setComments(res.data.comments);
+      setNewComment('');
+    } catch (err) {
+      console.error("Error adding comment:", err.response ? err.response.data : err.message);
+    }
+  };
+  
+  const handleUserPostClick = ()=>{
+    navigate(`/user/${authorDetails._id}/posts`);
+  }
+
   if (!post) {
     return <div>Loading...</div>;
   }
 
   // Find the author Details from the users list
   const authorDetails = users.find((u) => u._id === post.author);
-
+  
   return (
     <div className="singlePost">
       {updatePost ? (
@@ -194,8 +225,10 @@ const SinglePost = () => {
         <>
           <h2>{title}</h2>
           <div className="singleProfileCon">
-            <img src={"http://127.0.0.1:5000/images/" + authorDetails.userProfile} alt="" className="singleProfilePic" />
+            <span onClick={handleUserPostClick}>
+            <img src={authorDetails.userProfile ? "http://127.0.0.1:5000/images/" + authorDetails.userProfile : ''} alt="" className="singleProfilePic" />
             <span className="singleUsername">{authorDetails.username}</span>
+            </span>
             <span className="singleDate">
               ~ {new Date(post.createdAt).toDateString()}
             </span>
@@ -205,10 +238,32 @@ const SinglePost = () => {
           <span onClick={isLiked ? handleUnlike : handleLike}>
               <i className={`fa-regular fa-thumbs-up fa-xl ${isLiked ? 'liked' : ''}`}></i> {likesCount}
             </span>
-            <span>
-              <i className="fa-regular fa-comment fa-xl"></i> 4
+            <span onClick={handleToggleComments}>
+              <i className="fa-regular fa-comment fa-xl"></i> {comments.length}
             </span>
           </div>
+          {showComments && (
+            <div className="commentsSection">
+              <h3>Comments</h3>
+              <ul>
+                {comments.map((comment, index) => (
+                  <li key={index}>
+                    <img src={user.userProfile ? "http://127.0.0.1:5000/images/"+user.userProfile : ''} alt="" />
+                    <strong>{user.username}:</strong> {comment.text}{' '}
+                    <em>{new Date(comment.createdAt).toLocaleString()}</em>
+                  </li>
+                ))}
+              </ul>
+              <div className="addComment">
+                <textarea
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  placeholder="Add a comment..."
+                ></textarea>
+                <button onClick={handleAddComment}>Post Comment</button>
+              </div>
+            </div>
+          )}
           <hr />
           {post.author === user.userId ? (
             <div className="singleIconCon">

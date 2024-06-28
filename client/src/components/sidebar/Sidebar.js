@@ -18,7 +18,14 @@ const Sidebar = () => {
         </div>
         <div className="recomCon">
           <span>Recommended topics</span>
-          
+          <ul className="sideLists">
+            <li className="sidebarListItem">HTML</li>
+            <li className="sidebarListItem">CSS</li>
+            <li className="sidebarListItem">JavaScript</li>
+            <li className="sidebarListItem">React</li>
+            <li className="sidebarListItem">Node js</li>
+            <li className="sidebarListItem">Web Development</li>
+          </ul>
         </div>
         <Footer/>
       </div>

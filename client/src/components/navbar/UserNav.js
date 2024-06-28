@@ -23,11 +23,11 @@ const UserNav = () => {
                 </li>
                 <li className="nav-item">
                 <NavLink className="nav-link" to="/user/setting">
-                    <img src={"http://127.0.0.1:5000/images/"+ user.userProfile} alt="" className='userProfile'/>
+                    <img src={user.userProfile ? "http://127.0.0.1:5000/images/"+ user.userProfile : ''} alt="" className='userProfile'/>
                 </NavLink>
                 </li>
                 <li className="nav-item">
-                <NavLink className="nav-link" to="/login">LogOut</NavLink>
+                <NavLink className="nav-link" to="/user/logout">LogOut</NavLink>
                 </li>
             </ul>
             </div>

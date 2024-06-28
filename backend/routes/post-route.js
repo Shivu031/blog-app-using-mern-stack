@@ -82,6 +82,20 @@ router.get("/",async(req,res)=>{
     }
 });
 
+// GET all the posts of any user
+router.get("/user/:authorId",async(req,res)=>{
+    try{
+        const authorId = req.params.authorId;
+        const posts = await Post.find({author:authorId});
+        if(posts.length === 0){
+            res.status(404).json({ msg: 'No posts available for this user' });
+        }
+        res.json(posts);
+    }catch(err){
+        res.status(400).json({message:err.message});
+    }
+})
+
 // Like a post
 router.post("/:id/like",authMiddleware, async (req, res) => {
     try {
@@ -127,7 +141,7 @@ router.post("/:id/comments", authMiddleware, async (req, res) => {
             return res.status(404).json({ message: "Post not found" });
         }
         const comment = {
-            user: req.user._id,
+            author: req.user._id,
             text: req.body.text
         };
         post.comments.push(comment);

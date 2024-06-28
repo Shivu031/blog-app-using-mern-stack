@@ -7,8 +7,25 @@
 .sidebarCon, .recomCon{
     display: flex;
     flex-direction: column;
-    padding: 40px 5px 60px 10px;
+    padding: 25px 5px 10px 10px;
 }
 .sidebarBtn{
     margin: 4px 30px;
+}
+.sideLists{
+    list-style: none;
+}
+.sidebarListItem{
+    margin: 5px 0;
+    padding: 3px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+@media (max-width: 768px){
+    .sidebarCon, .recomCon{
+        display: flex;
+        flex-direction: column;
+        padding: 0px 5px 60px 10px;
+    }
 }

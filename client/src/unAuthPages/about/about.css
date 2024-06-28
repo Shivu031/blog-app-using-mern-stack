@@ -14,3 +14,21 @@
 .aboutIcon a{
     margin: 5px 20px 5px 20px;
 }
+@media (max-width: 768px){
+    .aboutImg{
+        width: 200px;
+        height: 300px;
+    }
+}
+@media (max-width: 400px){
+    .aboutCon{
+        display: inline;
+    }
+    .aboutPara{
+        margin: 5px 10px 5px 10px;
+        padding: 10px;
+    }
+    .aboutIcon a{
+        margin: 5px 10px 5px 10px;
+    }
+}

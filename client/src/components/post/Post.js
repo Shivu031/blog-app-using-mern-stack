@@ -12,13 +12,18 @@ const Post = ({post, authorDetails}) => {
   const handleClick = ()=>{
     navigate(`/user/post/${post._id}`);
   }
+  const handleUserPostClick = () =>{
+    navigate(`/user/${authorDetails._id}/posts`);
+  }
 
   return (
     <>
       <div className="post">
         <div className="postNav">
-          <img src={"http://127.0.0.1:5000/images/" + authorDetails.userProfile} alt="" className='postNavImg' />
-          <span className="postUsername">{authorDetails.username}</span>
+          <span onClick={handleUserPostClick}>
+            <img src={authorDetails.userProfile ? "http://127.0.0.1:5000/images/"+authorDetails.userProfile : ''} alt="" className='postNavImg' />
+            <span className="postUsername">{authorDetails.username}</span>
+          </span>
           <span className='postDate'>~  {new Date(post.createdAt).toDateString()}</span>
         </div>
         <div className="postTitle" onClick={handleClick}>

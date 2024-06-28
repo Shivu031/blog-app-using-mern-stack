@@ -105,3 +105,83 @@ i {
     width: 100%;
     border: none;
 }
+
+.commentsSection {
+  height: 40vh;  
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  overflow-y: scroll;
+}
+
+.commentsSection h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.commentsSection ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px 0;
+}
+
+.commentsSection li {
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+.commentsSection li img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.commentsSection li strong {
+  font-weight: bold;
+  margin-left: 8px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.commentsSection li em {
+  color: #888;
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+.addComment {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.addComment textarea {
+  resize: vertical;
+  min-height: 50px;
+  border: none;
+}
+.addComment textarea:focus {
+    outline: none;
+}
+
+.addComment button {
+  align-self: flex-end;
+  padding: 10px 20px;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.addComment button:hover {
+  background: #0056b3;
+}
+
+@media (max-width: 768px){
+    .singlePost {
+        padding: 20px 50px;
+    }
+}

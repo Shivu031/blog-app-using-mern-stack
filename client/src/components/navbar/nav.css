@@ -3,6 +3,7 @@
     width: 100%;
     position: fixed;
     cursor: pointer;
+    z-index: 1000;
 }
 .navbar-brand{
     font-style: italic;

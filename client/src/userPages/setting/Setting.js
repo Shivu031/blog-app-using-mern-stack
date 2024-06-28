@@ -10,7 +10,7 @@ const Setting = () => {
   const [email,setEmail] = useState("");
   const [password,setPassword] = useState("");
   
-  const {user,LogoutUser} = useAuth();
+  const {user,LogoutUser, storeTokenInLS} = useAuth();
   const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
@@ -49,23 +49,29 @@ const Setting = () => {
         }
       });
       console.log(res.data)
+      storeTokenInLS(token, res.data);
     }catch(err){
         console.log("error",err);
     }
   }
 
-  const handleDeleteAccount = async () => {
-    try {
-      const res = await axios.delete(`http://127.0.0.1:5000/api/users/${user.userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      console.log(res.data);
-      LogoutUser();
-      navigate("/register");
-    } catch (err) {
-      console.log(err);
+  const handleDeleteAccount = async (e) => {
+    const res = window.confirm("Are you sure you want to delete your account?");
+    if(res){
+      try {
+        const res = await axios.delete(`http://127.0.0.1:5000/api/users/${user.userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        console.log(res.data);
+        LogoutUser();
+        navigate("/register");
+      } catch (err) {
+        console.log(err);
+      }
+    }else{
+      e.preventDefault();
     }
   }
     
@@ -94,7 +100,7 @@ const Setting = () => {
           </div>
           <div className="mb-3">
             <label htmlFor="exampleFormControlInput1" className="form-label">Password:</label>
-            <input type="password" className="form-control" id="exampleFormControlInput1" placeholder={user.password} onChange={(e)=>setPassword(e.target.value)}/>
+            <input type="password" className="form-control" id="exampleFormControlInput1" placeholder="Enter ur password" onChange={(e)=>setPassword(e.target.value)}/>
           </div>
           <div className="d-grid gap-2 col-6 mx-auto">
             <button className="btn btn-secondary" type="submit">UPDATE</button>

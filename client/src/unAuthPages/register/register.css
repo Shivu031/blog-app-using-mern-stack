@@ -6,3 +6,8 @@
 .registerForm{
     margin: 20px 250px;
 }
+@media (max-width: 768px){
+    .registerForm{
+        margin: 20px 50px;
+    }
+}
