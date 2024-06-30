@@ -9,6 +9,11 @@ const Sidebar = () => {
     e.preventDefault();
     navigate("/user/write");
   }
+  
+  const handleTopicClick = (topic) => {
+    navigate(`/user/search?q=${topic}`);
+  };
+
   return (
     <>
       <div className="sidebar">
@@ -19,12 +24,15 @@ const Sidebar = () => {
         <div className="recomCon">
           <span>Recommended topics</span>
           <ul className="sideLists">
-            <li className="sidebarListItem">HTML</li>
-            <li className="sidebarListItem">CSS</li>
-            <li className="sidebarListItem">JavaScript</li>
-            <li className="sidebarListItem">React</li>
-            <li className="sidebarListItem">Node js</li>
-            <li className="sidebarListItem">Web Development</li>
+            {['HTML', 'CSS', 'JavaScript', 'React', 'Node js', 'Web Development'].map((topic) => (
+              <li
+                key={topic}
+                className="sidebarListItem"
+                onClick={() => handleTopicClick(topic)}
+              >
+                {topic}
+              </li>
+            ))}
           </ul>
         </div>
         <Footer/>

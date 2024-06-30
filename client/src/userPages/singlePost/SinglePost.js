@@ -105,7 +105,23 @@ const SinglePost = () => {
   };
 
   const handleImageChange = async (e, index) => {
-    
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await axios.post('http://127.0.0.1:5000/api/upload', formData);
+      const newImageUrl = res.data.url;
+      const updatedDescription = description.map((desc, i) => {
+        if (i === index) {
+          return { ...desc, data: newImageUrl };
+        }
+        return desc;
+      });
+      setDescription(updatedDescription);
+    } catch (err) {
+      console.log('Image upload error', err);
+    }
   };
   
   const renderText = (desc, index) => {

@@ -152,4 +152,19 @@ router.post("/:id/comments", authMiddleware, async (req, res) => {
     }
 });
 
+// Search route
+router.get('/search/q', async (req, res) => {
+    const { query } = req.query;
+    try {
+        if (!query) {
+            return res.status(400).json({ error: 'Query parameter is required' });
+        }
+        const posts = await Post.find({ $text: { $search: query } });
+        res.json(posts);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Server error' });
+    }
+});
+
 module.exports = router;
