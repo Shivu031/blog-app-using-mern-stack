@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import "./posts.css";
 import { useParams } from 'react-router-dom'
 import { useAuth } from '../../store/auth'
 import axios from 'axios';

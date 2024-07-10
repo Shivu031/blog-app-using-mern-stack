@@ -8,6 +8,9 @@
     margin-left: 50px;
 }
 @media (max-width: 600px){
+    .home{
+        padding: 50px 10px;
+    }
     .image{
         margin-left: 20px;
         width: 200px;

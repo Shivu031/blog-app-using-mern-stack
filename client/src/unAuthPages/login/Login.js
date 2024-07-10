@@ -35,12 +35,14 @@ const Login = () => {
         toast.success("Login successful");
         setTimeout(() => {
           navigate('/user');
-        }, 2000); // Redirect after 2 seconds
+        }, 1000); // Redirect after 1 seconds
       } else {
         toast.error('Invalid Credentials');
       }
     }catch(err){
-      toast.error('Invalid Credentials');
+      toast.error('Invalid Credentials', {
+        autoClose: 1000, // Toast disappears after 1 second
+      });
     }
   }
 

@@ -17,7 +17,7 @@ const SinglePost = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [showComments, setShowComments] = useState(false);
-
+  
   const token = localStorage.getItem("token");
   console.log(useAuth().user)
 
@@ -106,21 +106,24 @@ const SinglePost = () => {
 
   const handleImageChange = async (e, index) => {
     const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append('file', file);
-
-    try {
-      const res = await axios.post('http://127.0.0.1:5000/api/upload', formData);
-      const newImageUrl = res.data.url;
-      const updatedDescription = description.map((desc, i) => {
-        if (i === index) {
-          return { ...desc, data: newImageUrl };
-        }
-        return desc;
-      });
-      setDescription(updatedDescription);
-    } catch (err) {
-      console.log('Image upload error', err);
+    // setImageFile(file);
+    const data = new FormData();
+    console.log(data);
+    data.append('name',file.name);
+    data.append('file',file);
+    try{
+      console.log("object")
+      await axios.post("http://127.0.0.1:5000/api/upload",data);
+      const imageUrl = `http://127.0.0.1:5000/images/${file.name}`;
+      console.log(imageUrl)
+      const newDescription = [...description];
+      newDescription[index] = { 
+        ...newDescription[index],
+        data: imageUrl
+      };
+      setDescription(newDescription);
+    }catch(err){
+      console.log(err);
     }
   };
   
@@ -162,7 +165,6 @@ const SinglePost = () => {
         commentData,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log("AA")
       setComments(res.data.comments);
       setNewComment('');
     } catch (err) {
@@ -198,10 +200,10 @@ const SinglePost = () => {
                 if(desc.type === 'image'){
                   return (
                     <div key={index}>
-                      <label htmlFor='fileInput'><img src={desc.data} alt="" className="singleImage" /></label>
+                      <label htmlFor={`fileInput-${index}`}><img src={desc.data} alt="" className="singleImage" /></label>
                       <input
                         type="file"
-                        id='fileInput'
+                        id={`fileInput-${index}`}
                         accept="image/*"
                         style={{display:'none'}}
                         onChange={(e) => handleImageChange(e, index)}

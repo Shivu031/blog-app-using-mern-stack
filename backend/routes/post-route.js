@@ -28,7 +28,7 @@ router.put("/:id",async(req,res)=>{
         if (!post) {
           return res.status(404).json({ msg: 'Post not found' });
         }
-    
+        
         post.title = title || post.title;
         post.description = description || post.description;
         
@@ -159,7 +159,17 @@ router.get('/search/q', async (req, res) => {
         if (!query) {
             return res.status(400).json({ error: 'Query parameter is required' });
         }
-        const posts = await Post.find({ $text: { $search: query } });
+        // // { $regex: query }: Specifies the search term as a regular expression.
+        // // { $options: 'i' }: Makes the search case-insensitive.
+        // const posts = await Post.find({ title: { $regex: query, $options: 'i' } });
+
+        // Normalize the query to account for special characters
+        const normalizedQuery = query.split(' ').join('.*');
+
+        // Create the regex pattern with the normalized query
+        const regex = new RegExp(normalizedQuery, 'i');
+
+        const posts = await Post.find({ title: { $regex: regex } });
         res.json(posts);
     } catch (error) {
         console.error(error);

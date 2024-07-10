@@ -1,6 +1,7 @@
 .setting{
     margin: 80px 0px 20px 0px;
     text-align: center;
+    padding: 30px 20px;
 }
 .settingTitle{
     display: flex;

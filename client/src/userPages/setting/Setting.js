@@ -3,12 +3,13 @@ import "./setting.css";
 import { useAuth } from '../../store/auth';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Setting = () => {
   const [file,setFile] = useState(null);
   const [username,setUsername] = useState("");
   const [email,setEmail] = useState("");
-  const [password,setPassword] = useState("");
   
   const {user,LogoutUser, storeTokenInLS} = useAuth();
   const token = localStorage.getItem("token");
@@ -25,7 +26,6 @@ const Setting = () => {
       userId: user.userId,
       username: username || user.username,
       email: email || user.email,
-      password,
     };
     if(file){
       const data = new FormData();
@@ -50,8 +50,16 @@ const Setting = () => {
       });
       console.log(res.data)
       storeTokenInLS(token, res.data);
+      if(res){
+        toast.success("updted successfully", {
+          autoClose: 1000,
+        });
+      }
     }catch(err){
         console.log("error",err);
+        toast.error("Error...", {
+          autoClose: 1000,
+        });
     }
   }
 
@@ -98,14 +106,11 @@ const Setting = () => {
             <label htmlFor="exampleFormControlInput1" className="form-label">Email address:</label>
             <input type="email" className="form-control" id="exampleFormControlInput1" placeholder={user.email} onChange={(e)=>setEmail(e.target.value)}/>
           </div>
-          <div className="mb-3">
-            <label htmlFor="exampleFormControlInput1" className="form-label">Password:</label>
-            <input type="password" className="form-control" id="exampleFormControlInput1" placeholder="Enter ur password" onChange={(e)=>setPassword(e.target.value)}/>
-          </div>
           <div className="d-grid gap-2 col-6 mx-auto">
             <button className="btn btn-secondary" type="submit">UPDATE</button>
           </div>
         </form>  
+        <ToastContainer />
       </div>
     </>
   )

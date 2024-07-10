@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import "./posts.css";
 import { useLocation } from 'react-router-dom';
 import Post from '../post/Post';
 import axios from 'axios';
@@ -31,15 +32,17 @@ const SearchPosts = () => {
     <>
       <div className="posts">
         {posts.length ? (
-            posts.map((p) => (
+            <>
+            <h2 className='searchHead'>Results for {query}</h2>
+            {posts.map((p) => (
             <Post
             key={p._id}
             post={p}
             authorDetails={users.find((u) => u._id === p.author)}
             />
-        ))
+            ))}</>
         ): (
-            <h2>No results found for {query}</h2>
+            <h2 className='searchHead'>No results found for {query}</h2>
         )}
       </div>
     </>

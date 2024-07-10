@@ -34,12 +34,14 @@ const Register = () => {
         toast.success("Registration successful");
         setTimeout(() => {
           navigate('/login');
-        }, 2000); // Redirect after 2 seconds
+        }, 1000); // Redirect after 1 seconds
       } else {
         toast.error("Something went wrong...");
       }
     }catch(err){
-      toast.error("Something went wrong...");
+      toast.error("Something went wrong...", {
+        autoClose: 1000, // Toast disappears after 1 second
+      });
     }
   }
 

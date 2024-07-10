@@ -5,13 +5,11 @@ import Footer from '../components/footer/Footer';
 import About from '../unAuthPages/about/About';
 import Login from '../unAuthPages/login/Login';
 import Register from '../unAuthPages/register/Register';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import User from './User';
+import { Route, Routes } from "react-router-dom";
 
 const UnAuth = () => {
   return (
     <>
-    {/* <Router> */}
       <Nav/>
       <Routes>
         <Route exact path='/' element={<Home/>}/>
@@ -20,7 +18,6 @@ const UnAuth = () => {
         <Route exact path='/login' element={<Login/>}/>
       </Routes>
       <Footer/>
-    {/* </Router> */}
     </>
   )
 }

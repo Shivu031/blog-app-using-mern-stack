@@ -49,6 +49,4 @@ const PostSchema = new mongoose.Schema({
 {timestamps:true}
 );
 
-// Adding a text index to the title and description.data fields
-PostSchema.index({ title: 'text', 'description.data': 'text' });
 module.exports = mongoose.model("Post",PostSchema);
