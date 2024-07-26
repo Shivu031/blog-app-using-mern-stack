@@ -21,7 +21,7 @@ const Post = ({post, authorDetails}) => {
       <div className="post">
         <div className="postNav">
           <span onClick={handleUserPostClick}>
-            <img src={authorDetails.userProfile ? "http://127.0.0.1:5000/images/"+authorDetails.userProfile : ''} alt="" className='postNavImg' />
+            <img src={authorDetails.userProfile ? "http://127.0.0.1:5000/images/"+authorDetails.userProfile : '/images/noAvatar.png'} alt="" className='postNavImg' />
             <span className="postUsername">{authorDetails.username}</span>
           </span>
           <span className='postDate'>~  {new Date(post.createdAt).toDateString()}</span>

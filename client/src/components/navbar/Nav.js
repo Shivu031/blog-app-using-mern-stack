@@ -29,7 +29,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light" ref={navbarRef}>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-secondary" ref={navbarRef}>
             <div className="container-fluid">
                 <NavLink className="navbar-brand" to="/" onClick={handleNavLinkClick}>BLOG APP</NavLink>
                 <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded={!isNavbarCollapsed} aria-label="Toggle navigation" onClick={toggleNavbar}>

@@ -4,7 +4,7 @@ import "./footer.css";
 const Footer = () => {
   return (
     <>
-    <div className="footCon">
+    <div className="footCon bg-secondary">
       <ul className="footLi">
         <li className="footLiItem">Home</li>
         <li className="footLiItem">About</li>

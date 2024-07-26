@@ -1,6 +1,7 @@
 .userHome{
     display: flex;
-    height:100vh
+    height:100vh;
+    /* background-color: snow; */
 }
 @media (max-width: 1024px){
     .userHome{

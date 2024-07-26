@@ -18,7 +18,7 @@ const Sidebar = () => {
     <>
       <div className="sidebar">
         <div className="sidebarCon">
-          <span>Writing on blog app</span>
+          <span className='sidebarHead'>Writing on blog app</span>
           <button type="submit" className="sidebarBtn btn btn-secondary btn-sm" onClick={handleClick}>Start Writing</button>
         </div>
         <div className="recomCon">

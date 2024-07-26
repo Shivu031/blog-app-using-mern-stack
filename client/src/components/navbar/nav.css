@@ -8,6 +8,7 @@
 .navbar-brand{
     font-style: italic;
     font-weight: bold;
+    text-shadow: 2px 2px rgb(228, 101, 101);
 }
 .navbar-nav{
     margin-left: auto;

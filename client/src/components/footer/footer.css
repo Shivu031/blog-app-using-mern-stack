@@ -2,10 +2,10 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-color: rgb(242, 241, 241);
     padding-top: 10px;
     font-size: small;
     bottom: 0;
+    color: white;
 }
 .footLi{
     list-style: none;

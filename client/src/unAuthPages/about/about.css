@@ -1,6 +1,8 @@
 .about{
     text-align: center;
-    margin: 70px 0px 20px 0px;
+    margin: 58px 0px 0px 0px;
+    background-image: linear-gradient(to right, rgb(253, 245, 253), rgb(236, 253, 236), rgb(234, 234, 248));
+    padding: 14px;
 }
 .aboutCon{
     display: flex;

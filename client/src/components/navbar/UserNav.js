@@ -43,7 +43,7 @@ const UserNav = () => {
 
   return (
     <>
-    <nav className="navbar navbar-expand-lg navbar-light bg-light" ref={navbarRef}>
+    <nav className="navbar navbar-expand-lg navbar-dark bg-secondary" ref={navbarRef}>
         <div className="container-fluid">
             <NavLink className="navbar-brand" to="/user" onClick={handleNavLinkClick}>BLOG APP</NavLink>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded={!isNavbarCollapsed} aria-label="Toggle navigation" onClick={toggleNavbar}>
@@ -54,7 +54,7 @@ const UserNav = () => {
                 <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}/>
-                <button className="btn btn-outline-success" type="submit">Search</button>
+                <button className="btn btn-outline-light" type="submit">Search</button>
             </form>
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                 <li className="nav-item">
@@ -62,7 +62,7 @@ const UserNav = () => {
                 </li>
                 <li className="nav-item">
                 <NavLink className="nav-link" to="/user/setting" onClick={handleNavLinkClick}>
-                    <img src={user.userProfile ? "http://127.0.0.1:5000/images/"+ user.userProfile : ''} alt="" className='userProfile'/>
+                    <img src={user.userProfile ? "http://127.0.0.1:5000/images/"+ user.userProfile : '/images/noAvatar.png'} alt="" className='userProfile'/>
                 </NavLink>
                 </li>
                 <li className="nav-item">

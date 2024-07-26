@@ -10,16 +10,16 @@ const SinglePost = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState([]);
   const [updatePost, setUpdatePost] = useState(false);
-  const { user, users} = useAuth();
-  const navigate = useNavigate();
   const [isLiked, setIsLiked] = useState(false);
   const [likesCount, setLikesCount] = useState(0);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [showComments, setShowComments] = useState(false);
+  const { user, users} = useAuth();
+  const navigate = useNavigate();
   
   const token = localStorage.getItem("token");
-  console.log(useAuth().user)
+  // console.log(useAuth().user)
 
   useEffect(() => {
     const getPost = async () => {
@@ -184,6 +184,7 @@ const SinglePost = () => {
   const authorDetails = users.find((u) => u._id === post.author);
   
   return (
+    <>
     <div className="singlePost">
       {updatePost ? (
         <>
@@ -244,7 +245,7 @@ const SinglePost = () => {
           <h2>{title}</h2>
           <div className="singleProfileCon">
             <span onClick={handleUserPostClick}>
-            <img src={authorDetails.userProfile ? "http://127.0.0.1:5000/images/" + authorDetails.userProfile : ''} alt="" className="singleProfilePic" />
+            <img src={authorDetails.userProfile ? "http://127.0.0.1:5000/images/" + authorDetails.userProfile : '/images/noAvatar.png'} alt="" className="singleProfilePic" />
             <span className="singleUsername">{authorDetails.username}</span>
             </span>
             <span className="singleDate">
@@ -264,13 +265,16 @@ const SinglePost = () => {
             <div className="commentsSection">
               <h3>Comments</h3>
               <ul>
-                {comments.map((comment, index) => (
-                  <li key={index}>
-                    <img src={user.userProfile ? "http://127.0.0.1:5000/images/"+user.userProfile : ''} alt="" />
-                    <strong>{user.username}:</strong> {comment.text}{' '}
-                    <em>{new Date(comment.createdAt).toLocaleString()}</em>
-                  </li>
-                ))}
+                {comments.map((comment, index) => {
+                  const commentAuthor = users.find((u) => u._id === comment.author);
+                  return (
+                    <li key={index}>
+                      <img alt='' src={commentAuthor.userProfile ? `http://127.0.0.1:5000/images/${commentAuthor.userProfile}` : '/images/noAvatar.png'}/>
+                      <strong>{commentAuthor.username} : </strong> {comment.text} &emsp; &emsp;
+                      <em>{new Date(comment.createdAt).toLocaleString()}</em>
+                    </li>
+                  );
+                })}
               </ul>
               <div className="addComment">
                 <textarea
@@ -315,6 +319,7 @@ const SinglePost = () => {
         </>
       )}
     </div>
+    </>
   );
 };
 

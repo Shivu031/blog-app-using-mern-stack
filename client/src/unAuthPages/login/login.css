@@ -1,4 +1,4 @@
-.login{
+/* .login{
     margin: 70px 0px 20px 0px;
     text-align: center;
     padding: 100px 0px 100px 0px;
@@ -10,4 +10,26 @@
     .loginForm{
         margin: 20px 50px;
     }
+} */
+.login {
+  margin: 56px 0 0;
+  text-align: center;
+  padding: 129px 0;
+  background-image: linear-gradient(to right, rgb(253, 245, 253), rgb(236, 253, 236), rgb(234, 234, 248));
+}
+
+.loginCon {
+  background-color: white;
+  padding: 24px 0;
+  margin: 0 auto;
+  max-width: 320px;
+  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+}
+
+.loginForm {
+  margin: 20px 50px;
+}
+.loginForm .btn{
+    width: 100%;
 }
