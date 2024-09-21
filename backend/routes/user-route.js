@@ -1,6 +1,6 @@
 const authMiddleware = require("../middlewares/auth-middleware");
 const User = require("../models/User-Model");
-
+const Post = require("../models/Post-Model");
 const router = require("express").Router();
 
 // UPDATE USER
@@ -28,13 +28,14 @@ router.put("/:id",authMiddleware,async(req,res)=>{
 // DELETE USER
 router.delete("/:id",authMiddleware,async(req,res)=>{
     try {
-        const user = await User.findById(req.params.id);
+        const userId = req.params.id;
+        const user = await User.findById(userId);
         
         if (!user) {
           return res.status(404).json({ error: 'User not found' });
         }
-    
-        await User.deleteOne({ _id: req.params.id });
+        await Post.deleteMany({ author: userId });
+        await User.deleteOne({ _id: userId });
         res.json({ message: 'User account deleted successfully' });
     } catch (error) {
         res.status(500).json({ error: error.message });

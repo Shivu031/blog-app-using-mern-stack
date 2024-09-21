@@ -63,6 +63,7 @@ const Login = () => {
               </div>
           </form>
           <ToastContainer />
+          <a href="/forgot-pass">Forgot Password</a><br/>
         </div>
       </div>
     </>

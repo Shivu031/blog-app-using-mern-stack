@@ -1,7 +1,7 @@
 .footCon{
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
     padding-top: 10px;
     font-size: small;
     bottom: 0;
@@ -12,5 +12,17 @@
     display: flex;
 }
 .footLiItem{
+    margin-right: 5px;
+}
+.footSocial{
+    margin-left: 20px;
+}
+.footSocial a {
     margin: 5px;
+    text-decoration: none;
+    color: white;
+}
+
+.footSocial a:hover {
+    text-decoration: underline;
 }

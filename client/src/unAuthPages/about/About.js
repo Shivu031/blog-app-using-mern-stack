@@ -4,8 +4,8 @@ import "./about.css";
 const About = () => {
     const instaUrl = "https://www.instagram.com/";
     const fbUrl = "https://www.facebook.com/";
-    const linkUrl = "https://www.linkedin.com/feed/";
-    const gitUrl = "https://github.com/";
+    const linkUrl = "https://www.linkedin.com/in/shivanee-patel-307672253/";
+    const gitUrl = "https://github.com/Shivu031";
   return (
     <>
       <div className="about">

@@ -72,7 +72,7 @@ router.get("/:id",async(req,res)=>{
 //GET ALL THE POSTS
 router.get("/",async(req,res)=>{
     try{
-        const posts = await Post.find();
+        const posts = await Post.find().sort({createdAt: -1});
         if(!posts){
             res.status(404).json({msg:"No Posts Available"});
         }
@@ -151,6 +151,7 @@ router.post("/:id/comments", authMiddleware, async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 });
+
 
 // Search route
 router.get('/search/q', async (req, res) => {

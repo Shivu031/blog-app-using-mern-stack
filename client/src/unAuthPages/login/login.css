@@ -1,20 +1,7 @@
-/* .login{
-    margin: 70px 0px 20px 0px;
-    text-align: center;
-    padding: 100px 0px 100px 0px;
-}
-.loginForm{
-    margin: 20px 250px;
-}
-@media (max-width: 768px){
-    .loginForm{
-        margin: 20px 50px;
-    }
-} */
 .login {
   margin: 56px 0 0;
   text-align: center;
-  padding: 129px 0;
+  padding: 117px 0;
   background-image: linear-gradient(to right, rgb(253, 245, 253), rgb(236, 253, 236), rgb(234, 234, 248));
 }
 
